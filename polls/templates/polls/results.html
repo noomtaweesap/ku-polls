@@ -1,9 +1,21 @@
-<h1>{{ question.question_text }}</h1>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<div style="margin: 40px; border-style: solid;border-radius: 60px;border-width: thick; background-color: lightblue">
+     <h1 style="margin-left: 40px;margin-top: 40px">{{ question.question_text }}</h1>
 
-<ul>
+    <ul>
     {% for choice in question.choice_set.all %}
-        <div>
-            <span>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</span>
-        </div>
+        <div style=" font-family: 'Arial'">
+        <span style="font-size: xx-large">{{ choice.choice_text }}  </span>
+        <span style="margin-left: 50px">({{ choice.votes }} vote{{ choice.votes|pluralize }})</span>
     {% endfor %}
-</ul>
+    </ul>
+
+</div>
+            <div style = "text-align: left:padding:40px;margin:50px">
+               <button type="button" class="btn btn-light"><a href="{% url 'polls:index' %}" style="text-decoration: none;color: black; font-size: large ">Return to Home page</a></button>
+            </div>
+</head>
+<body style = 'background: url(https://wallpaperaccess.com/full/697583.jpg)' >
+</body>
+
