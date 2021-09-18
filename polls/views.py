@@ -1,13 +1,10 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.utils import timezone
-from django.views import generic
-
-
 from .models import Choice, Question
-
+from django.shortcuts import redirect, get_object_or_404, render
+from django.views import generic
 from django.utils import timezone
+from django.contrib import messages
 
 
 class IndexView(generic.ListView):
@@ -53,11 +50,23 @@ def vote(request, question_id):
     else:
         selected_choice.votes += 1
         selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
+def get_queryset(self):
+    """
+    Return the last five published questions (not including those set to be
+    published in the future).
+    """
+    return Question.objects.filter(
+        pub_date__lte=timezone.now()
+    ).order_by('-pub_date')[:5]
 
 
+def detail(request, question_id=None):
+    question = get_object_or_404(Question, pk=question_id)
+    if not question.can_vote():
+        messages.error(request, f"Voting is not allowed")
+        return HttpResponseRedirect(reverse('polls:index'))
+    else:
+        return render(request, 'polls/detail.html', {'question': question})

@@ -37,6 +37,42 @@ class QuestionModelTests(TestCase):
         recent_question = Question(pub_date=time)
         self.assertIs(recent_question.was_published_recently(), True)
 
+    def test_is_published_with_future_question(self):
+        """
+        is_published() returns False for questions whose pub_date
+        is in the future.
+        """
+        time = timezone.now() + datetime.timedelta(hours=24)
+        future_question = Question(pub_date=time)
+        self.assertIs(future_question.is_published(), False)
+
+    def test_is_published_with_old_question(self):
+        """
+        is_published() returns True for questions whose pub_date
+        is older than 1 day.
+        """
+        time = timezone.now() - datetime.timedelta(days=1)
+        old_question = Question(pub_date=time)
+        self.assertIs(old_question.is_published(), True)
+
+    def test_can_vote_with_expired_question(self):
+        """
+        can_vote() returns False if the question is expired.
+        """
+        pub_date = timezone.now() - datetime.timedelta(days=10)
+        end_date = timezone.now() - datetime.timedelta(seconds=1)
+        expired_question = Question(pub_date=pub_date, end_date=end_date)
+        self.assertIs(expired_question.can_vote(), False)
+
+    def test_can_vote_with_future_question(self):
+        """
+        can_vote() returns False if the question is not published yet.
+        """
+        pub_date = timezone.now() + datetime.timedelta(days=10)
+        end_date = timezone.now() + datetime.timedelta(days=20)
+        future_question = Question(pub_date=pub_date, end_date=end_date)
+        self.assertIs(future_question.can_vote(), False)
+
 
 def create_question(question_text, days):
     """
