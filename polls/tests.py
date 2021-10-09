@@ -164,8 +164,9 @@ class QuestionDetailViewTests(TestCase):
 
         with a pub_date in the past displays the question's text.
         """
-        past_question = create_question(question_text='Past Question.',
-                                        days=-5)
+        past_question = create_question(question_text='Past Question.', days=-5)
         url = reverse('polls:detail', args=(past_question.id,))
+        past_question.end_date = timezone.now() + datetime.timedelta(days=10)
+        past_question.save()
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
