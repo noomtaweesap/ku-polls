@@ -160,7 +160,7 @@ class QuestionDetailViewTests(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_past_question(self):
-        """The detail view of a question.
+        """The detail view of question.
 
         with a pub_date in the past displays the question's text.
         """
