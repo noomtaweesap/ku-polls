@@ -1,4 +1,5 @@
-# KU Polls [![Build Status](https://app.travis-ci.com/noomtaweesap/ku-polls.svg?branch=iteration2)](https://app.travis-ci.com/noomtaweesap/ku-polls)
+# KU Polls 
+[![Build Status](https://app.travis-ci.com/noomtaweesap/ku-polls.svg?branch=iteration2)](https://app.travis-ci.com/noomtaweesap/ku-polls) [![codecov](https://codecov.io/gh/noomtaweesap/ku-polls/branch/iteration2/graph/badge.svg?token=HIPFTZXS5G)](https://codecov.io/gh/noomtaweesap/ku-polls)
 
 Web application for surveys by online polls created for [Kasetsart University](https://www.ku.ac.th/th) students and staffs.
 
