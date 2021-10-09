@@ -1,0 +1,1 @@
+"""Initialize ku-polls project."""
