@@ -1,4 +1,5 @@
-# KU Polls
+# KU Polls [![Build Status](https://app.travis-ci.com/noomtaweesap/ku-polls.svg?branch=iteration2)](https://app.travis-ci.com/noomtaweesap/ku-polls)
+
 Web application for surveys by online polls created for [Kasetsart University](https://www.ku.ac.th/th) students and staffs.
 
 ## Project Documents
