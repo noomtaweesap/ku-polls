@@ -1,7 +1,7 @@
 """You can edit choices and questions for admin page."""
 
 from django.contrib import admin
-from .models import Choice, Question
+from .models import Choice, Question, Vote
 
 
 class ChoiceInline(admin.TabularInline):
