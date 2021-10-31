@@ -23,6 +23,7 @@ class AuthenticationTests(TestCase):
     def test_logout(self):
         self.client.post(reverse('login'), self.user)
         response = self.client.post(reverse('logout'))
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
         response = self.client.get(reverse('polls:index'))
         self.assertFalse(response.context['user'].is_authenticated)
+        
