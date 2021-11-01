@@ -1,11 +1,14 @@
 """Views for polls."""
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Choice, Question
-from django.shortcuts import get_object_or_404, render
+from .models import Choice, Question, Vote
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 
 
 class IndexView(generic.ListView):
@@ -43,6 +46,7 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
+@login_required()
 def vote(request, question_id):
     """Vote for selected choice.
 
@@ -62,8 +66,12 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
+        if question.vote_set.filter(user=request.user).exists():
+            vote = question.vote_set.get(user=request.user)
+            vote.choice = selected_choice
+            vote.save()
+        else:
+            selected_choice.vote_set.create(user=request.user, question=question)
         return HttpResponseRedirect(reverse('polls:results',
                                             args=(question.id,)))
 
